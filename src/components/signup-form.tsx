@@ -26,6 +26,9 @@ import {
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { signUp } from "../../server/authentication";
+import { useState } from "react";
+import { Spinner } from "./ui/spinner";
+import { useRouter } from "next/navigation";
 
 const formSchema = z
   .object({
@@ -43,6 +46,8 @@ export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -53,14 +58,18 @@ export function SignupForm({
     },
   });
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsLoading(true);
     try {
       const result = await signUp(values.name, values.email, values.password);
       if (result && result.success) {
         form.reset();
         alert(result.message);
       }
+      router.push("/login");
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   }
   return (
@@ -149,7 +158,9 @@ export function SignupForm({
                   )}
                 />
                 <Field>
-                  <Button type="submit">Create Account</Button>
+                  <Button type="submit" disabled={isLoading}>
+                    {isLoading ? <Spinner /> : "Create Account"}
+                  </Button>
                   <FieldDescription className="text-center">
                     Already have an account? <Link href="/login">Sign in</Link>
                   </FieldDescription>
