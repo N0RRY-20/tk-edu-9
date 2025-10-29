@@ -3,6 +3,7 @@ import { columns } from "./columns";
 import { DataTable } from "./dataTable";
 import { auth } from "@/lib/auth";
 import { User } from "better-auth";
+import { DialogCloseButton } from "@/components/crud-form/create-user-form";
 
 const now = Date.now();
 export default async function DemoPage() {
@@ -33,6 +34,7 @@ export default async function DemoPage() {
   console.log(users);
   return (
     <div className="container mx-auto py-10">
+      <DialogCloseButton />
       <DataTable columns={columns} data={users} />
     </div>
   );
