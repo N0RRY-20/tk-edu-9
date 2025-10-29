@@ -29,10 +29,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import Link from "next/link";
-import { signin } from "../../server/authentication";
+import { signin } from "../../../server/authentication";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Spinner } from "./ui/spinner";
+import { Spinner } from "../ui/spinner";
 
 const formSchema = z.object({
   email: z.email().min(2).max(50),

@@ -22,12 +22,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "./ui/form";
+} from "../ui/form";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import { signUp } from "../../server/authentication";
+import { signUp } from "../../../server/authentication";
 import { useState } from "react";
-import { Spinner } from "./ui/spinner";
+import { Spinner } from "../ui/spinner";
 import { useRouter } from "next/navigation";
 
 const formSchema = z
