@@ -65,3 +65,52 @@ export const deleteUser = async (userId: string) => {
     };
   }
 };
+
+export const updateUser = async ({
+  userId,
+  data,
+  role,
+  newPassword,
+}: {
+  userId: string;
+  data: {
+    email?: string;
+    name?: string;
+  };
+  role?: ("admin" | "guru" | "walimurid")[];
+  newPassword?: string;
+}) => {
+  const updateResponse = await auth.api.adminUpdateUser({
+    body: {
+      userId, // required
+      data, // required
+    },
+    // This endpoint requires session cookies.
+    headers: await headers(),
+  });
+  if (role) {
+    await auth.api.setRole({
+      body: {
+        userId, // required
+        role,
+      },
+      // This endpoint requires session cookies.
+      headers: await headers(),
+    });
+  }
+
+  if (newPassword) {
+    await auth.api.setUserPassword({
+      body: {
+        newPassword, // required
+        userId, // required
+      },
+      // This endpoint requires session cookies.
+      headers: await headers(),
+    });
+  }
+  return {
+    message: "User updated successfully",
+    updateResponse,
+  };
+};

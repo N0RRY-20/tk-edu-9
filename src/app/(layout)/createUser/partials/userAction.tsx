@@ -12,6 +12,7 @@ import { Button } from "@/components/ui/button";
 import { MoreHorizontal } from "lucide-react";
 import { deleteUser } from "../../../../../server/user";
 import { UserWithRole } from "better-auth/plugins";
+import { UpdateUserForm } from "@/components/crud-form/update-user-form";
 
 export function UserActions({ user }: { user: UserWithRole }) {
   const router = useRouter();
@@ -42,7 +43,7 @@ export function UserActions({ user }: { user: UserWithRole }) {
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />
-
+        <UpdateUserForm user={user} />
         <DropdownMenuItem onClick={handleDelete}>Delete User</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

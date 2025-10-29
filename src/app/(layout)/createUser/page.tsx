@@ -3,8 +3,8 @@ import { columns } from "./columns";
 import { DataTable } from "./dataTable";
 import { auth } from "@/lib/auth";
 
-import { DialogCloseButton } from "@/components/crud-form/create-user-form";
 import { UserWithRole } from "better-auth/plugins";
+import { CreateUserForm } from "@/components/crud-form/create-user-form";
 
 const now = Date.now();
 export default async function DemoPage() {
@@ -48,7 +48,7 @@ export default async function DemoPage() {
   console.log(users);
   return (
     <div className="container mx-auto py-10">
-      <DialogCloseButton />
+      <CreateUserForm />
       <DataTable columns={columns} data={users} />
     </div>
   );

@@ -43,7 +43,7 @@ const formSchema = z.object({
 
 // as const penting supaya TypeScript tahu ini literal types
 
-export function DialogCloseButton() {
+export function CreateUserForm() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
