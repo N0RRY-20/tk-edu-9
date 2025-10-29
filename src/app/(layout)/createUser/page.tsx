@@ -2,11 +2,27 @@ import { headers } from "next/headers";
 import { columns } from "./columns";
 import { DataTable } from "./dataTable";
 import { auth } from "@/lib/auth";
-import { User } from "better-auth";
+
 import { DialogCloseButton } from "@/components/crud-form/create-user-form";
+import { UserWithRole } from "better-auth/plugins";
 
 const now = Date.now();
 export default async function DemoPage() {
+  const session = await auth.api.getSession({ headers: await headers() });
+  console.log(session?.user.role); // Harus muncul ["admin"]
+
+  const hasPermission = await auth.api.userHasPermission({
+    body: {
+      permissions: {
+        User: ["list"], // Permission untuk list users
+      },
+    },
+    headers: await headers(),
+  });
+  if (!hasPermission) {
+    return <p>Anda tidak memiliki izin untuk melihat daftar users.</p>;
+  }
+
   const response = await auth.api.listUsers({
     query: {
       offset: 0,
@@ -20,11 +36,12 @@ export default async function DemoPage() {
   if (!response) {
     return <p>Gagal memuat data.</p>;
   }
-  const users: User[] = (response?.users || []).map((u) => ({
+  const users: UserWithRole[] = (response?.users || []).map((u) => ({
     id: u.id ?? "unknown-id", // tambahkan id
     name: u.name ?? "Unknown",
     email: u.email ?? "-",
     emailVerified: u.emailVerified ?? false,
+    role: u.role ?? "user",
     image: u.image ?? null,
     createdAt: new Date(u.createdAt),
     updatedAt: new Date(u.updatedAt ?? now), // tambahkan updatedAt
