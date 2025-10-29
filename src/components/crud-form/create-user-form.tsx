@@ -57,18 +57,7 @@ export function DialogCloseButton() {
           <DialogTitle>Buat User</DialogTitle>
           <DialogDescription>Buat user baru.</DialogDescription>
         </DialogHeader>
-        {/* <div className="flex items-center gap-2">
-          <div className="grid flex-1 gap-2">
-            <Label htmlFor="link" className="sr-only">
-              Link
-            </Label>
-            <Input
-              id="link"
-              defaultValue="https://ui.shadcn.com/docs/installation"
-              readOnly
-            />
-          </div>
-        </div> */}
+
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
             <FormField
