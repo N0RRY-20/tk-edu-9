@@ -8,9 +8,6 @@ import { UserWithRole } from "better-auth/plugins";
 
 const now = Date.now();
 export default async function DemoPage() {
-  const session = await auth.api.getSession({ headers: await headers() });
-  console.log(session?.user.role); // Harus muncul ["admin"]
-
   const hasPermission = await auth.api.userHasPermission({
     body: {
       permissions: {

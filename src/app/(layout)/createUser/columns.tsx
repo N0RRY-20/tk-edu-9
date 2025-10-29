@@ -4,6 +4,8 @@ import { ColumnDef } from "@tanstack/react-table";
 
 import { UserWithRole } from "better-auth/plugins";
 
+import { UserActions } from "./partials/userAction";
+
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 
@@ -27,5 +29,9 @@ export const columns: ColumnDef<UserWithRole>[] = [
   {
     accessorKey: "createdAt",
     header: " Created At",
+  },
+  {
+    id: "actions",
+    cell: ({ row }) => <UserActions user={row.original} />,
   },
 ];
